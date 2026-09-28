@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kajian Coaching BoD-3 & BoD-4 | ELDP 2026</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <style>
+    :root {
+      --c-chrome: #DCDCDC; --c-neon: #2D5FFF; --c-shadow: #161616;
+      --c-bg: #F8FAFC; --c-white: #FFFFFF; --c-text-main: #161616;
+      --c-text-sub: #4B5563; --c-text-muted: #6B7280; --c-border: #E2E8F0; --c-neon-light: #EDF2FF;
+
+      --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px; --s-9: 48px; --s-10: 64px;
+
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+
+      --r-lg: 16px; --r-md: 12px; --r-sm: 8px;
+      --shadow-sm: 0 2px 8px rgba(22, 22, 22, 0.04);
+      --shadow-md: 0 4px 12px rgba(22, 22, 22, 0.05);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #09090B; font-family: var(--font-body); color: var(--c-text-main); -webkit-font-smoothing: antialiased; }
+
+    .deck-viewport { position: fixed; inset: 0; overflow: hidden; background: #09090B; display: flex; align-items: center; justify-content: center; }
+    .deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--c-bg); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75); }
+
+    .slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: flex; flex-direction: column; padding: 28px 64px 24px 64px; visibility: hidden; opacity: 0; pointer-events: none; background: var(--c-bg); transition: opacity 0.45s ease, visibility 0.45s ease; }
+    .slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
+    .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+    .slide.visible .reveal-1 { transition-delay: 0.05s; }
+    .slide.visible .reveal-2 { transition-delay: 0.12s; }
+    .slide.visible .reveal-3 { transition-delay: 0.20s; }
+    .slide.visible .reveal-4 { transition-delay: 0.28s; }
+    .slide.visible .reveal-5 { transition-delay: 0.36s; }
+    .slide.visible .reveal-6 { transition-delay: 0.44s; }
+
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+
+    /* CONTAINER SYSTEM (Optimized) */
+    .container { display: flex; flex-direction: column; padding: 18px 22px; border-radius: var(--r-lg); background: var(--c-white); border: 1px solid var(--c-border); box-shadow: var(--shadow-md); transition: border-color 0.2s ease, box-shadow 0.2s ease; overflow: hidden; }
+    .container:hover { border-color: var(--c-neon); box-shadow: 0 8px 24px rgba(45, 95, 255, 0.12); }
+    .container.dark { background: var(--c-shadow); color: var(--c-white); border-color: #2A2A2A; }
+    .container.neon-tint { background: linear-gradient(180deg, var(--c-white) 0%, var(--c-neon-light) 100%); }
+    .container.chrome-bg { background: var(--c-bg); }
+
+    .c-body { display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; }
+    
+    /* TYPOGRAPHY (Slimmed) */
+    .t-hero { font-family: var(--font-display); font-size: 36px; font-weight: 900; line-height: 1.15; letter-spacing: -0.03em; color: var(--c-shadow); }
+    .t-hero .highlight { color: var(--c-neon); }
+    .t-title { font-family: var(--font-display); font-size: 28px; font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; color: var(--c-shadow); }
+    .t-subtitle { font-size: 15px; font-weight: 500; line-height: 1.4; color: var(--c-text-sub); margin-top: 4px; }
+    .t-card-title { font-family: var(--font-display); font-size: 18px; font-weight: 800; line-height: 1.25; color: var(--c-shadow); }
+    .container.dark .t-card-title { color: var(--c-white); }
+    .t-card-sub { font-size: 13px; font-weight: 600; color: var(--c-text-muted); }
+    .t-card-sub.neon { color: var(--c-neon); }
+    .t-body { font-size: 14px; line-height: 1.5; color: var(--c-text-sub); }
+    .container.dark .t-body { color: #D1D5DB; }
+    .t-body-sm { font-size: 13px; line-height: 1.45; color: var(--c-text-sub); }
+    .container.dark .t-body-sm { color: #D1D5DB; }
+    .t-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-muted); }
+    .t-metric { font-family: var(--font-display); font-size: 36px; font-weight: 900; line-height: 1; color: var(--c-shadow); }
+    .t-metric.neon { color: var(--c-neon); }
+    .container.dark .t-metric { color: var(--c-white); }
+
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; background: var(--c-bg); color: var(--c-shadow); white-space: nowrap; flex-shrink: 0; border: 1px solid var(--c-border); }
+    .badge.neon { background: var(--c-neon); color: var(--c-white); border-color: var(--c-neon); }
+    .badge.dark { background: var(--c-shadow); color: var(--c-white); border-color: var(--c-shadow); }
+    .badge.outline { background: transparent; border: 1px solid var(--c-neon); color: var(--c-neon); }
+
+    .list-pro { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .list-pro li { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; line-height: 1.4; color: var(--c-shadow); font-weight: 600; }
+    .container.dark .list-pro li { color: var(--c-white); }
+    .list-pro li .material-symbols-outlined { color: var(--c-neon); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+
+    .list-clean { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .list-clean li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.4; color: var(--c-text-sub); }
+    .container.dark .list-clean li { color: #D1D5DB; }
+    .list-clean li strong { color: var(--c-shadow); font-weight: 700; }
+    .container.dark .list-clean li strong { color: var(--c-white); }
+    .list-clean li::before { content: "→"; color: var(--c-neon); font-weight: bold; flex-shrink: 0; line-height: 1.4; }
+
+    /* SLIDE STRUCTURE */
+    .slide-topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--c-border); flex-shrink: 0; }
+    .brand-cluster { display: flex; align-items: center; gap: 12px; }
+    .logo-box { height: 36px; padding: 4px 12px; background: var(--c-white); border: 1px solid var(--c-border); border-radius: var(--r-sm); display: flex; align-items: center; }
+    .logo-box img { height: 22px; width: auto; }
+    .slide-tag { font-size: 12px; font-weight: 700; color: var(--c-text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .slide-title-block { margin-top: 20px; margin-bottom: 20px; flex-shrink: 0; display: flex; flex-direction: column; }
+    .slide-footer { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: var(--c-white); border: 1px solid var(--c-border); border-radius: var(--r-md); font-size: 12px; color: var(--c-text-muted); font-weight: 600; flex-shrink: 0; margin-top: 16px; box-shadow: var(--shadow-sm); }
+
+    /* MODULAR GRIDS (Gap kecil) */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; min-height: 0; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; flex: 1; min-height: 0; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; flex: 1; min-height: 0; }
+    .grid-hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; flex: 1; min-height: 0; }
+
+    /* INTERNAL CARD COMPONENTS */
+    .c-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--c-border); }
+    .container.dark .c-header { border-bottom-color: #2A2A2A; }
+    .c-header.no-border { border-bottom: none; padding-bottom: 0; margin-bottom: 10px; }
+    .c-header-title { display: flex; flex-direction: column; gap: 2px; }
+
+    .insight-box { margin-top: auto; padding: 12px 16px; background: var(--c-bg); border: 1px solid var(--c-border); border-radius: var(--r-md); display: flex; flex-direction: column; gap: 6px; }
+    .insight-box.dark { background: var(--c-shadow); border-color: #2A2A2A; color: var(--c-white); }
+    .insight-box.neon { background: var(--c-neon-light); border-color: var(--c-neon); }
+    .insight-box .t-label { color: var(--c-neon); display: flex; align-items: center; gap: 4px; }
+    .insight-box .material-symbols-outlined { font-size: 14px; }
+
+    .flow-box { margin-top: auto; padding: 12px; background: var(--c-bg); border: 1px solid var(--c-border); border-radius: var(--r-md); display: flex; flex-direction: column; gap: 10px; }
+    .flow-steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 6px; align-items: center; }
+    .flow-step { background: var(--c-white); padding: 6px 10px; border-radius: var(--r-sm); border: 1px solid var(--c-border); text-align: center; font-size: 12px; font-weight: 700; color: var(--c-shadow); }
+    .flow-arrow { color: var(--c-neon); font-weight: bold; font-size: 14px; }
+
+    .timeline-card { position: relative; }
+    .timeline-card::before { content: ""; position: absolute; top: 0; left: 22px; right: 22px; height: 3px; background: var(--c-border); border-radius: 0 0 4px 4px; }
+    .timeline-card.active::before { background: var(--c-neon); }
+    .timeline-num { width: 32px; height: 32px; border-radius: var(--r-sm); background: var(--c-bg); color: var(--c-shadow); font-family: var(--font-display); font-size: 14px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .timeline-num.active { background: var(--c-neon); color: var(--c-white); }
+    .deliverable-box { padding: 10px 14px; border-radius: var(--r-md); background: var(--c-bg); border: 1px solid var(--c-border); margin-top: auto; display: flex; flex-direction: column; gap: 4px; }
+    .deliverable-box.neon { background: var(--c-neon-light); border-color: var(--c-neon); }
+
+    .kpi-card { justify-content: space-between; padding: 16px; }
+    .kpi-footer { padding-top: 10px; margin-top: auto; border-top: 1px solid var(--c-border); font-size: 11px; font-weight: 700; color: var(--c-text-muted); }
+    .container.dark .kpi-footer { border-top-color: #2A2A2A; color: var(--c-chrome); }
+    .kpi-footer.neon { color: var(--c-neon); }
+
+    .ref-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .ref-icon { width: 36px; height: 36px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; background: var(--c-bg); color: var(--c-neon); font-size: 18px; flex-shrink: 0; }
+    .container.dark .ref-icon { background: rgba(255,255,255,0.08); }
+    .container.neon-tint .ref-icon { background: var(--c-neon); color: var(--c-white); }
+    .ref-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; line-height: 1.4; color: var(--c-text-sub); margin-top: auto; }
+    .ref-list li { display: flex; align-items: flex-start; gap: 8px; }
+    .ref-list li::before { content: "✓"; color: var(--c-neon); font-weight: 800; flex-shrink: 0; }
+    .container.dark .ref-list { color: #D1D5DB; }
+    .container.dark .ref-list li strong { color: var(--c-white); }
+
+    .bottom-banner { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 14px 20px; background: var(--c-white); border: 1px solid var(--c-border); border-radius: var(--r-md); margin-top: 16px; flex-shrink: 0; box-shadow: var(--shadow-sm); }
+    .bottom-banner.dark { background: var(--c-shadow); border-color: #2A2A2A; color: var(--c-white); }
+    .bottom-banner.neon-border { border: 1px solid var(--c-neon); }
+    .bottom-banner .banner-icon { font-size: 24px; color: var(--c-neon); }
+    .bottom-banner .banner-text { font-size: 13px; line-height: 1.4; color: var(--c-text-sub); }
+    .bottom-banner.dark .banner-text { color: #D1D5DB; }
+    .bottom-banner .banner-text strong { color: var(--c-shadow); }
+    .bottom-banner.dark .banner-text strong { color: var(--c-white); }
+
+    .stat-row { display: flex; justify-content: space-between; gap: 12px; padding-top: 12px; margin-top: auto; border-top: 1px solid var(--c-border); }
+    .stat-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; color: var(--c-shadow); }
+    .stat-item .material-symbols-outlined { color: var(--c-neon); font-size: 20px; flex-shrink: 0; }
+
+    /* HUD NAVIGATION */
+    .deck-controls { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; align-items: center; gap: 8px; padding: 6px 16px; background: rgba(22, 22, 22, 0.95); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 100px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+    .hud-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.1); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
+    .hud-btn:hover { background: var(--c-neon); transform: scale(1.08); }
+    .hud-dots { display: flex; gap: 6px; padding: 0 8px; }
+    .hud-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); cursor: pointer; transition: all 0.25s ease; }
+    .hud-dot.active { width: 24px; border-radius: 10px; background: var(--c-neon); }
+    .hud-counter { color: var(--c-chrome); font-size: 11px; font-weight: 700; padding: 0 4px; letter-spacing: 0.05em; }
+
+    .edit-hotzone { position: fixed; top: 0; left: 0; width: 60px; height: 60px; z-index: 10000; cursor: pointer; }
+    .edit-toggle { position: fixed; top: 12px; left: 12px; z-index: 10001; padding: 8px 12px; border-radius: var(--r-sm); border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(22, 22, 22, 0.9); color: #FFFFFF; font-size: 11px; font-weight: 700; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+    .edit-toggle.show { opacity: 1; pointer-events: auto; }
+    [contenteditable="true"] { outline: 2px dashed var(--c-neon) !important; outline-offset: 4px; }
+
+    @page { size: 1920px 1080px; margin: 0; }
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      html, body { width: 1920px !important; height: auto !important; overflow: visible !important; background: #FFFFFF !important; }
+      .deck-viewport { position: static !important; display: block !important; background: #FFFFFF !important; }
+      .deck-stage { position: static !important; width: 1920px !important; height: auto !important; transform: none !important; box-shadow: none !important; }
+      .slide { position: relative !important; display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px !important; height: 1080px !important; break-after: page !important; page-break-after: always !important; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .deck-controls, .edit-hotzone, .edit-toggle { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-viewport">
+    <main class="deck-stage" id="deckStage">
+
+      <!-- SLIDE 1: RINGKASAN -->
+      <section class="slide active visible" data-slide="1">
+        <header class="slide-topbar reveal reveal-1">
+          <div class="brand-cluster">
+            <div class="logo-box"><img src="https://thumb.wikimedia.org/wikipedia/id/thumb/c/cc/PT_PP_logo.svg/330px-PT_PP_logo.svg.png" alt="PT PP" onerror="this.style.display='none'"></div>
+            <span class="badge">ELDP 2026 | BoD-3 & BoD-4</span>
+          </div>
+          <span class="slide-tag">SLIDE 01 / 06</span>
+        </header>
+
+        <div class="slide-title-block reveal reveal-2">
+          <h2 class="t-title">Kajian Kegiatan <em>Executive Coaching</em></h2>
+          <p class="t-subtitle">Membantu calon pemimpin bertransisi dari staf teknis menjadi penggerak tim yang efektif.</p>
+        </div>
+
+        <div class="grid-hero">
+          <div class="container reveal reveal-3" style="padding: 28px 32px;">
+            <div class="c-body">
+              <span class="badge neon" style="align-self: flex-start;">EXECUTIVE SUMMARY</span>
+              <h1 class="t-hero" style="margin-top: 16px;">Mengapa Calon Pemimpin Perlu <span class="highlight">Pendampingan <em>Coaching</em></span>?</h1>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                <ul class="list-pro">
+                  <li><span class="material-symbols-outlined">verified</span><div>Pemetaan profil peserta (33 orang) menunjukkan masih tingginya rasio <em>Individual Contributor</em>.</div></li>
+                  <li><span class="material-symbols-outlined">verified</span><div>Eksekusi <em>coaching</em> diatur dalam 3 sesi tatap muka selama periode <em>Action Learning Project</em>.</div></li>
+                  <li><span class="material-symbols-outlined">verified</span><div>Pendekatan ini menyelaraskan 70% <em>experiential learning</em> dengan 20% <em>social learning</em>.</div></li>
+                </ul>
+
+                <div class="insight-box">
+                  <div class="t-label"><span class="material-symbols-outlined">lightbulb</span> KONTEKS PRAKTIK</div>
+                  <p class="t-body-sm">Banyak staf berprestasi yang mahir secara teknis, namun mengalami kesulitan saat dipercaya memimpin tim. <em>Coaching</em> hadir bukan untuk menggantikan peran atasan, melainkan menjadi "ruang refleksi" yang aman bagi peserta untuk belajar memimpin tanpa khawatir dinilai salah oleh perusahaan.</p>
+                </div>
+              </div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-item"><span class="material-symbols-outlined">groups</span><span>33 Peserta ELDP</span></div>
+              <div class="stat-item"><span class="material-symbols-outlined">schedule</span><span>3 Sesi 1-on-1</span></div>
+              <div class="stat-item"><span class="material-symbols-outlined">verified</span><span>Fokus Proyek Nyata</span></div>
+            </div>
+          </div>
+
+          <div class="container dark reveal reveal-4">
+            <div class="c-body">
+              <span class="badge dark" style="align-self: flex-start;">DATA PESERTA</span>
+              <h3 class="t-card-title" style="margin-top: 12px; font-size: 20px;">Profil Demografi ELDP 2026</h3>
+              <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+                <div>
+                  <div class="t-metric" style="font-size: 32px;">52%</div>
+                  <p class="t-body" style="margin-top: 6px;">Masih berperan sebagai <em>Individual Contributor</em> yang belum terbiasa memimpin tim secara formal.</p>
+                </div>
+                <div style="padding-top: 12px; border-top: 1px solid #2A2A2A;">
+                  <div class="t-metric neon" style="font-size: 32px;">91%</div>
+                  <p class="t-body" style="margin-top: 6px;">Didominasi Generasi Y (Milenial) yang membutuhkan pola kemitraan, bukan gaya komando satu arah.</p>
+                </div>
+              </div>
+              <div class="kpi-footer" style="margin-top: auto;">
+                <span class="material-symbols-outlined" style="font-size: 14px; margin-right: 4px;">source</span>Sumber: Survei Profil Peserta ELDP 2026
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer reveal reveal-5">
+          <span>Divisi Human Capital Corporate Learning (HCCL)</span>
+          <span>PT PP (Persero) Tbk</span>
+        </footer>
+      </section>
+
+      <!-- SLIDE 2: TEMUAN & SOLUSI -->
+      <section class="slide" data-slide="2">
+        <header class="slide-topbar reveal reveal-1">
+          <div class="brand-cluster">
+            <div class="logo-box"><img src="https://thumb.wikimedia.org/wikipedia/id/thumb/c/cc/PT_PP_logo.svg/330px-PT_PP_logo.svg.png" alt="PT PP" onerror="this.style.display='none'"></div>
+            <span class="badge">TEMUAN & SOLUSI</span>
+          </div>
+          <span class="slide-tag">SLIDE 02 / 06</span>
+        </header>
+
+        <div class="slide-title-block reveal reveal-2">
+          <h2 class="t-title">Diagnosis Tantangan & Usulan Solusi</h2>
+          <p class="t-subtitle">Berdasarkan evaluasi data peserta, terdapat dua tantangan utama yang perlu diintervensi.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="container reveal reveal-3">
+            <div class="c-header no-border">
+              <div class="c-header-title">
+                <div class="t-metric">52%</div>
+                <h3 class="t-card-title" style="margin-top: 4px;">Kesulitan Transisi Peran (Delegasi)</h3>
+              </div>
+              <span class="badge">Profil Peserta</span>
+            </div>
+            <div class="c-body">
+              <ul class="list-pro">
+                <li><span class="material-symbols-outlined">check_circle</span><div>Identifikasi kebiasaan <em>Individual Contributor</em> yang menghambat pelepasan kendali.</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Penerapan Formula Delegasi "15-5-10" dari <em>StaffCoaching Guidebook</em>.</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Pendampingan teknis oleh Mentor untuk validasi proyek.</div></li>
+              </ul>
+            </div>
+            <div class="insight-box">
+              <div class="t-label"><span class="material-symbols-outlined">lightbulb</span> PRAKTIK DI LAPANGAN</div>
+              <p class="t-body-sm">Solusi: Mendelegasikan 15% tugas rutin, meluangkan 5% waktu untuk pengarahan, dan menggunakan 10% waktu untuk supervisi tanpa mengambil alih pekerjaan anggota tim.</p>
+            </div>
+          </div>
+
+          <div class="container reveal reveal-4">
+            <div class="c-header no-border">
+              <div class="c-header-title">
+                <div class="t-metric neon">91%</div>
+                <h3 class="t-card-title" style="margin-top: 4px;">Ketidaksesuaian Gaya Kepemimpinan</h3>
+              </div>
+              <span class="badge">Profil Peserta</span>
+            </div>
+            <div class="c-body">
+              <ul class="list-pro">
+                <li><span class="material-symbols-outlined">check_circle</span><div>Transisi dari gaya komando menuju pola kemitraan (Kepemimpinan Gen Y).</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Penerapan Prinsip Pembelajaran Orang Dewasa (Andragogi) 10-60-90.</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Fasilitasi ruang refleksi oleh Coach Eksternal yang independen.</div></li>
+              </ul>
+            </div>
+            <div class="insight-box neon">
+              <div class="t-label"><span class="material-symbols-outlined">lightbulb</span> PRAKTIK DI LAPANGAN</div>
+              <p class="t-body-sm">Generasi milenial lebih responsif terhadap diskusi dua arah. Peserta dilatih untuk mengganti perintah dengan pertanyaan pemantik, menciptakan rasa aman bagi tim untuk melapor, dan membangun rasa kepemilikan bersama.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-banner reveal reveal-5">
+          <span class="material-symbols-outlined banner-icon">tips_and_updates</span>
+          <div class="banner-text">
+            <strong>Kepatuhan Regulasi:</strong> Kegiatan <em>coaching</em> diakui dalam WI Pelatihan (PP/SOP/E3-029 Rev-2) sebagai bagian dari MDP, karena merupakan upaya pengembangan pegawai secara menyeluruh.
+          </div>
+          <span class="badge dark">Kepatuhan Regulasi</span>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Divisi Human Capital Corporate Learning (HCCL)</span>
+          <span>PT PP (Persero) Tbk</span>
+        </footer>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 3: PEMBAGIAN PERAN
+           ============================================================ -->
+      <section class="slide" data-slide="3">
+        <header class="slide-topbar reveal reveal-1">
+          <div class="brand-cluster">
+            <div class="logo-box"><img src="https://thumb.wikimedia.org/wikipedia/id/thumb/c/cc/PT_PP_logo.svg/330px-PT_PP_logo.svg.png" alt="PT PP" onerror="this.style.display='none'"></div>
+            <span class="badge">PEMBAGIAN PERAN</span>
+          </div>
+          <span class="slide-tag">SLIDE 03 / 06</span>
+        </header>
+
+        <div class="slide-title-block reveal reveal-2">
+          <h2 class="t-title">Pemisahan Peran: Mentor & Coach</h2>
+          <p class="t-subtitle">Agar tidak terjadi tumpang-tindih, peran atasan dan <em>coach</em> eksternal dipisahkan dengan jelas.</p>
+        </div>
+
+        <div class="grid-2">
+          <!-- Mentor Container -->
+          <div class="container reveal reveal-3">
+            <div class="c-header">
+              <div class="c-header-title">
+                <h3 class="t-card-title">Atasan Langsung (Mentor)</h3>
+                <span class="t-card-sub">Pejabat Struktural Unit Kerja</span>
+              </div>
+              <span class="badge">Internal</span>
+            </div>
+            <div class="c-body" style="gap: 14px;">
+              <ul class="list-pro" style="gap: 12px;">
+                <li><span class="material-symbols-outlined">engineering</span><div>Validasi kelayakan teknis, kepatuhan SOP, dan efisiensi anggaran proyek.</div></li>
+                <li><span class="material-symbols-outlined">record_voice_over</span><div>Transfer pengetahuan teknis dan koreksi langsung pada rancangan bisnis.</div></li>
+              </ul>
+              
+              <!-- Zone 1: Flow Box -->
+              <div class="flow-box" style="margin-top: 4px;">
+                <div class="t-label">Tahapan Belajar Lapangan:</div>
+                <div class="flow-steps">
+                  <div class="flow-step">1. Amati</div>
+                  <span class="flow-arrow">➔</span>
+                  <div class="flow-step">2. Eksekusi Bersama</div>
+                  <span class="flow-arrow">➔</span>
+                  <div class="flow-step">3. Mandiri</div>
+                </div>
+              </div>
+
+              <!-- Zone 2: Insight Box -->
+              <div class="insight-box" style="margin-top: 4px;">
+                <div class="t-label"><span class="material-symbols-outlined">lightbulb</span> FUNGSI UTAMA</div>
+                <p class="t-body-sm">Atasan berperan memastikan proyek yang dikerjakan peserta layak secara bisnis dan aman secara aturan. Pendampingan ini berfokus pada output teknis yang akan diujikan kepada Direksi.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coach Container -->
+          <div class="container neon-tint reveal reveal-4">
+            <div class="c-header">
+              <div class="c-header-title">
+                <h3 class="t-card-title">Pelatih Profesional (Coach)</h3>
+                <span class="t-card-sub neon">Praktisi Eksternal Bersertifikat</span>
+              </div>
+              <span class="badge neon">Eksternal</span>
+            </div>
+            <div class="c-body" style="gap: 14px;">
+              <ul class="list-pro" style="gap: 12px;">
+                <li><span class="material-symbols-outlined">psychology</span><div>Pembentukan pola pikir kepemimpinan dan resolusi konflik tim.</div></li>
+                <li><span class="material-symbols-outlined">lock</span><div>Penyediaan ruang refleksi 100% rahasia yang terbebas dari penilaian kinerja.</div></li>
+              </ul>
+              
+              <!-- Zone 1: Kriteria Box -->
+              <div class="flow-box" style="background: #FFFFFF; border-color: var(--c-neon); margin-top: 4px;">
+                <div class="t-label" style="color: var(--c-neon);">Kriteria Seleksi Coach:</div>
+                <div class="flow-steps" style="grid-template-columns: repeat(3, 1fr);">
+                  <div class="flow-step">Sertifikat ICF/BNSP</div>
+                  <div class="flow-step">Pengalaman BUMN/Konstruksi</div>
+                  <div class="flow-step">Sesuai PP/DIVOC&SCM/P/031</div>
+                </div>
+              </div>
+
+              <!-- Zone 2: Insight Box -->
+              <div class="insight-box neon" style="margin-top: 4px;">
+                <div class="t-label"><span class="material-symbols-outlined">lightbulb</span> FUNGSI UTAMA</div>
+                <p class="t-body-sm">Coach berperan membentuk kedewasaan bersikap dan cara memengaruhi tim. Karena berstatus pihak luar, <em>coach</em> memberikan kenyamanan bagi peserta untuk mengakui kelemahan tanpa khawatir berdampak pada penilaian kinerja formalnya.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-banner dark reveal reveal-5">
+          <span class="material-symbols-outlined banner-icon">hub</span>
+          <div class="banner-text">
+            <strong style="color: var(--c-neon);">Sinergi Optimal:</strong> Mentor menjamin proyek layak bisnis; Coach menjamin peserta memiliki kapabilitas memimpin anggota timnya agar proyek selesai tepat waktu.
+          </div>
+          <span class="badge neon">Saling Melengkapi</span>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Divisi Human Capital Corporate Learning (HCCL)</span>
+          <span>PT PP (Persero) Tbk</span>
+        </footer>
+      </section>
+
+      <!-- SLIDE 4: TIMELINE -->
+      <section class="slide" data-slide="4">
+        <header class="slide-topbar reveal reveal-1">
+          <div class="brand-cluster">
+            <div class="logo-box"><img src="https://thumb.wikimedia.org/wikipedia/id/thumb/c/cc/PT_PP_logo.svg/330px-PT_PP_logo.svg.png" alt="PT PP" onerror="this.style.display='none'"></div>
+            <span class="badge">ALUR PELAKSANAAN</span>
+          </div>
+          <span class="slide-tag">SLIDE 04 / 06</span>
+        </header>
+
+        <div class="slide-title-block reveal reveal-2">
+          <h2 class="t-title">Tahapan Pelaksanaan 3 Sesi Pendampingan</h2>
+          <p class="t-subtitle">Dijalankan berurutan, sinkron dengan periode pengerjaan <em>Action Learning Project</em> 2026.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="container timeline-card reveal reveal-3">
+            <div class="c-header no-border">
+              <div class="timeline-num">01</div>
+              <span class="badge">Fase Fondasi</span>
+            </div>
+            <div class="c-body">
+              <h3 class="t-card-title">Penetapan Target</h3>
+              <p class="t-card-sub neon">Membangun Rasa Percaya</p>
+              <ul class="list-pro">
+                <li><span class="material-symbols-outlined">check_circle</span><div>Eksplorasi harapan dan ketakutan peserta dalam memimpin tim.</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Perumusan target IDP (2-3 perilaku teramati).</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Penyusunan <em>working agreement</em> antara <em>coach</em> dan peserta.</div></li>
+              </ul>
+            </div>
+            <div class="deliverable-box">
+              <div class="t-label">Output Sesi 1:</div>
+              <div class="t-card-title" style="font-size: 14px; display: flex; align-items: center; gap: 6px;">
+                <span class="material-symbols-outlined" style="color: var(--c-neon); font-size: 18px;">description</span>
+                <em>Individual Development Plan</em>
+              </div>
+            </div>
+          </div>
+
+          <div class="container timeline-card active reveal reveal-4">
+            <div class="c-header no-border">
+              <div class="timeline-num active">02</div>
+              <span class="badge neon">Fase Eksekusi</span>
+            </div>
+            <div class="c-body">
+              <h3 class="t-card-title">Evaluasi Kendala Lapangan</h3>
+              <p class="t-card-sub neon">Saat Proyek Berjalan</p>
+              <ul class="list-pro">
+                <li><span class="material-symbols-outlined">check_circle</span><div>Bedah kasus delegasi tugas dan koordinasi lintas divisi.</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Pelatihan struktur instruksi kerja (Tugas, PIC, Standar, Tenggat).</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Strategi komunikasi persuasif untuk rekan kerja senior.</div></li>
+              </ul>
+            </div>
+            <div class="deliverable-box neon">
+              <div class="t-label" style="color: var(--c-neon);">Output Sesi 2:</div>
+              <div class="t-card-title" style="font-size: 14px; display: flex; align-items: center; gap: 6px;">
+                <span class="material-symbols-outlined" style="color: var(--c-neon); font-size: 18px;">pending_actions</span>
+                Catatan Kemajuan & Solusi
+              </div>
+            </div>
+          </div>
+
+          <div class="container timeline-card reveal reveal-5">
+            <div class="c-header no-border">
+              <div class="timeline-num">03</div>
+              <span class="badge">Fase Akhir</span>
+            </div>
+            <div class="c-body">
+              <h3 class="t-card-title">Persiapan Sidang</h3>
+              <p class="t-card-sub neon">Menjelang Ujian Direksi</p>
+              <ul class="list-pro">
+                <li><span class="material-symbols-outlined">check_circle</span><div>Validasi konsistensi penerapan perilaku kepemimpinan baru.</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Simulasi menjawab pertanyaan kritis dari Dewan Penguji (Direksi).</div></li>
+                <li><span class="material-symbols-outlined">check_circle</span><div>Transisi bahasa presentasi ke pendekatan dampak bisnis.</div></li>
+              </ul>
+            </div>
+            <div class="deliverable-box">
+              <div class="t-label">Output Sesi 3:</div>
+              <div class="t-card-title" style="font-size: 14px; display: flex; align-items: center; gap: 6px;">
+                <span class="material-symbols-outlined" style="color: var(--c-neon); font-size: 18px;">verified_user</span>
+                Kesiapan Presentasi Akhir
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-banner reveal reveal-6">
+          <span class="material-symbols-outlined banner-icon">payments</span>
+          <div class="banner-text">
+            <strong>Mekanisme Pembiayaan:</strong> Honorarium <em>coach</em> mengacu pada RKAP PT PP (Pasal 6.2.6), dengan pembebanan biaya proporsional sesuai unit asal peserta (UKP/DVO/AP).
+          </div>
+          <span class="badge dark">Pembiayaan</span>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Divisi Human Capital Corporate Learning (HCCL)</span>
+          <span>PT PP (Persero) Tbk</span>
+        </footer>
+      </section>
+
+      <!-- SLIDE 5: KPI -->
+      <section class="slide" data-slide="5">
+        <header class="slide-topbar reveal reveal-1">
+          <div class="brand-cluster">
+            <div class="logo-box"><img src="https://thumb.wikimedia.org/wikipedia/id/thumb/c/cc/PT_PP_logo.svg/330px-PT_PP_logo.svg.png" alt="PT PP" onerror="this.style.display='none'"></div>
+            <span class="badge">CARA MENGUKUR KEBERHASILAN</span>
+          </div>
+          <span class="slide-tag">SLIDE 05 / 06</span>
+        </header>
+
+        <div class="slide-title-block reveal reveal-2">
+          <h2 class="t-title">Indikator & Mekanisme Evaluasi</h2>
+          <p class="t-subtitle">Menggunakan 4 tahap pengukuran untuk memastikan dampak program. <em style="color: var(--c-neon); font-weight: 700;">*Angka di bawah adalah usulan target awal.</em></p>
+        </div>
+
+        <div class="grid-4">
+          <div class="container kpi-card reveal reveal-3">
+            <div class="c-body">
+              <span class="badge" style="align-self: flex-start;">TAHAP 1: KEPUASAN</span>
+              <h4 class="t-card-title" style="font-size: 16px; margin-top: 8px;">Relevansi Materi</h4>
+              <div class="t-metric" style="margin: 8px 0;">≥ 3.50</div>
+              <p class="t-body-sm">Peserta merasa sesi bimbingan langsung menjawab kebutuhan kerja harian, bukan sekadar teori.</p>
+            </div>
+            <div class="kpi-footer">Alat Ukur: Kuesioner (1x24 jam pasca sesi)</div>
+          </div>
+
+          <div class="container kpi-card neon-tint reveal reveal-4" style="border-color: var(--c-neon);">
+            <div class="c-body">
+              <span class="badge outline" style="align-self: flex-start;">TAHAP 2: KOMITMEN</span>
+              <h4 class="t-card-title" style="font-size: 16px; margin-top: 8px;">Rencana Aksi Selesai</h4>
+              <div class="t-metric neon" style="margin: 8px 0;">100%</div>
+              <p class="t-body-sm">Seluruh peserta merumuskan target perubahan perilaku yang disetujui Peserta, <em>Coach</em>, dan Atasan.</p>
+            </div>
+            <div class="kpi-footer neon">Alat Ukur: <em>Form</em> Komitmen 3 Pihak</div>
+          </div>
+
+          <div class="container kpi-card reveal reveal-5">
+            <div class="c-body">
+              <span class="badge" style="align-self: flex-start;">TAHAP 3: PERILAKU</span>
+              <h4 class="t-card-title" style="font-size: 16px; margin-top: 8px;">Observasi Atasan</h4>
+              <div class="t-metric" style="margin: 8px 0;">≥ 85%</div>
+              <p class="t-body-sm">Atasan melihat kemajuan nyata: peserta berani mendelegasikan tugas dan lebih tenang mengarahkan tim.</p>
+            </div>
+            <div class="kpi-footer">Alat Ukur: Survei (3x30 hari pasca sesi)</div>
+          </div>
+
+          <div class="container dark kpi-card reveal reveal-6">
+            <div class="c-body">
+              <span class="badge dark" style="align-self: flex-start;">TAHAP 4: HASIL BISNIS</span>
+              <h4 class="t-card-title" style="font-size: 16px; margin-top: 8px;">Kelayakan Proyek</h4>
+              <div class="t-metric" style="margin: 8px 0;">≥ 90%</div>
+              <p class="t-body-sm">Proyek inovasi terbukti aplikatif dan memberi kontribusi nyata bagi efisiensi anggaran.</p>
+            </div>
+            <div class="kpi-footer">Alat Ukur: Sidang Kelayakan Direksi</div>
+          </div>
+        </div>
+
+        <div class="bottom-banner neon-border reveal reveal-6">
+          <span class="material-symbols-outlined banner-icon">verified</span>
+          <div class="banner-text" style="display: flex; flex-direction: column; gap: 4px;">
+            <strong>Rekomendasi Tindak Lanjut HCCL:</strong>
+            <ul class="list-clean" style="margin-top: 0;">
+              <li>Penunjukan <em>Executive Coach</em> profesional bersertifikat (ICF/BNSP) yang berpengalaman di lingkungan BUMN.</li>
+              <li>Pembakuan <em>formulir</em> IDP dan penyelarasan jadwal 3 sesi <em>coaching</em> dengan tenggat waktu proyek inovasi ELDP.</li>
+            </ul>
+          </div>
+          <span class="badge neon">Siap Diimplementasikan</span>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Divisi Human Capital Corporate Learning (HCCL)</span>
+          <span>PT PP (Persero) Tbk</span>
+        </footer>
+      </section>
+
+      <!-- SLIDE 6: REFERENSI -->
+      <section class="slide" data-slide="6">
+        <header class="slide-topbar reveal reveal-1">
+          <div class="brand-cluster">
+            <div class="logo-box"><img src="https://thumb.wikimedia.org/wikipedia/id/thumb/c/cc/PT_PP_logo.svg/330px-PT_PP_logo.svg.png" alt="PT PP" onerror="this.style.display='none'"></div>
+            <span class="badge">SUMBER REFERENSI</span>
+          </div>
+          <span class="slide-tag">SLIDE 06 / 06</span>
+        </header>
+
+        <div class="slide-title-block reveal reveal-2">
+          <h2 class="t-title">Landasan Kajian & Rujukan Metodologi</h2>
+          <p class="t-subtitle">Kajian ini disusun berdasarkan kebijakan internal, standar global pengembangan talenta, dan literatur kepemimpinan.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="container reveal reveal-3">
+            <div class="ref-header">
+              <div class="ref-icon"><span class="material-symbols-outlined">corporate_fare</span></div>
+              <div>
+                <h3 class="t-card-title" style="font-size: 16px;">Dokumen Internal PT PP</h3>
+                <div class="t-card-sub">PT PP (2026)</div>
+              </div>
+            </div>
+            <ul class="list-clean" style="flex: 1; justify-content: center;">
+              <li><strong>ELDP 2026:</strong> Kebijakan pengembangan BoD-3 (JG 16) & BoD-4 (JG 15).</li>
+              <li><strong>Dasar Kebijakan:</strong> RJPP 2025-2029, HC Masterplan, Inisiatif HCM 2026-2030.</li>
+              <li><strong>Data Demografi:</strong> Profil 33 peserta (52% IC, 91% Gen Y).</li>
+              <li><strong>Evaluasi Day 1:</strong> Relevansi materi dan kontekstualisasi lapangan.</li>
+            </ul>
+          </div>
+
+          <div class="container neon-tint reveal reveal-4">
+            <div class="ref-header">
+              <div class="ref-icon"><span class="material-symbols-outlined">menu_book</span></div>
+              <div>
+                <h3 class="t-card-title" style="font-size: 16px;">ATD Member-Only Tools</h3>
+                <div class="t-card-sub neon">Shana Montesol Johnson</div>
+              </div>
+            </div>
+            <ul class="list-clean" style="flex: 1; justify-content: center;">
+              <li><strong>Protokol Sesi 1:</strong> Agenda pembukaan fondasi <em>coaching</em>.</li>
+              <li><strong>Eksplorasi Hopes & Fears:</strong> Penggalian harapan & ketakutan.</li>
+              <li><strong>Kesepakatan Kerja:</strong> Standarisasi kerahasiaan dan tata tertib.</li>
+              <li><strong>Perumusan Sasaran:</strong> Indikator keberhasilan yang teramati.</li>
+            </ul>
+          </div>
+
+          <div class="container dark reveal reveal-5">
+            <div class="ref-header">
+              <div class="ref-icon"><span class="material-symbols-outlined">auto_stories</span></div>
+              <div>
+                <h3 class="t-card-title" style="font-size: 16px;"><em>StaffCoaching™ Guidebook</em></h3>
+                <div class="t-card-sub neon">Micki Holliday (2nd Ed.)</div>
+              </div>
+            </div>
+            <ul class="list-clean" style="flex: 1; justify-content: center;">
+              <li><strong>Model StaffCoach™:</strong> Diferensiasi peran <em>Coach</em>, Mentor, & Counselor.</li>
+              <li><strong>Formula 15-5-10:</strong> Sistematis delegasi tugas teknis (hal. 130).</li>
+              <li><strong>Prinsip 10-60-90:</strong> Andragogi / Retensi pembelajaran dewasa (Praktik 90%).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bottom-banner dark reveal reveal-6">
+          <span class="material-symbols-outlined banner-icon">verified_user</span>
+          <div class="banner-text">
+            <strong style="color: var(--c-neon); text-transform: uppercase;">Sintesis:</strong>
+            Menggabungkan kebijakan BUMN, protokol global ATD, dan instrumen StaffCoach™ untuk memastikan transisi peran 33 calon pemimpin berjalan dengan sukses.
+          </div>
+          <span class="badge neon">Teruji & Berdasar</span>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Divisi Human Capital Corporate Learning (HCCL)</span>
+          <span>PT PP (Persero) Tbk</span>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- NAVIGASI HUD -->
+  <nav class="deck-controls" aria-label="Kontrol Navigasi Slide">
+    <button class="hud-btn" id="prevBtn" title="Slide Sebelumnya (Panah Kiri)">
+      <span class="material-symbols-outlined">chevron_left</span>
+    </button>
+    <div class="hud-dots" id="hudDots">
+      <div class="hud-dot active" data-index="0" title="Slide 1"></div>
+      <div class="hud-dot" data-index="1" title="Slide 2"></div>
+      <div class="hud-dot" data-index="2" title="Slide 3"></div>
+      <div class="hud-dot" data-index="3" title="Slide 4"></div>
+      <div class="hud-dot" data-index="4" title="Slide 5"></div>
+      <div class="hud-dot" data-index="5" title="Slide 6"></div>
+    </div>
+    <span class="hud-counter" id="slideCounter">1 / 6</span>
+    <button class="hud-btn" id="nextBtn" title="Slide Selanjutnya (Panah Kanan / Spasi)">
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>
+    <button class="hud-btn" id="fsBtn" title="Layar Penuh (F)">
+      <span class="material-symbols-outlined">fullscreen</span>
+    </button>
+  </nav>
+
+  <div class="edit-hotzone" id="editHotzone" title="Arahkan kursor ke sini atau tekan 'E' untuk mengedit teks secara langsung"></div>
+  <button class="edit-toggle" id="editToggle">✏️ Mode Edit (E)</button>
+
+  <script>
+    class DeckPresentation {
+      constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.stage = document.getElementById('deckStage');
+        this.counter = document.getElementById('slideCounter');
+        this.dots = document.querySelectorAll('.hud-dot');
+        this.currentSlide = 0;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.isEditing = false;
+
+        this.initScale();
+        this.initKeyboard();
+        this.initTouch();
+        this.initButtons();
+        this.initInlineEditing();
+        this.showSlide(0);
+      }
+
+      initScale() {
+        const updateScale = () => {
+          const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+          const x = (window.innerWidth - 1920 * factor) / 2;
+          const y = (window.innerHeight - 1080 * factor) / 2;
+          this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        updateScale();
+        window.addEventListener('resize', updateScale);
+      }
+
+      showSlide(index) {
+        if (index < 0 || index >= this.slides.length) return;
+        this.currentSlide = index;
+        this.slides.forEach((slide, idx) => {
+          const isActive = idx === this.currentSlide;
+          slide.classList.toggle('active', isActive);
+          slide.classList.toggle('visible', isActive);
+        });
+        this.dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === this.currentSlide);
+        });
+        if (this.counter) this.counter.textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
+      }
+
+      next() { if (this.currentSlide < this.slides.length - 1) this.showSlide(this.currentSlide + 1); }
+      prev() { if (this.currentSlide > 0) this.showSlide(this.currentSlide - 1); }
+
+      initKeyboard() {
+        document.addEventListener('keydown', (e) => {
+          if (e.target.isContentEditable) return;
+          if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.next(); }
+          else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); this.prev(); }
+          else if (e.key === 'Home') { e.preventDefault(); this.showSlide(0); }
+          else if (e.key === 'End') { e.preventDefault(); this.showSlide(this.slides.length - 1); }
+          else if (e.key === 'f' || e.key === 'F') { this.toggleFullscreen(); }
+          else if (e.key === 'e' || e.key === 'E') { this.toggleEditMode(); }
+        });
+      }
+
+      initTouch() {
+        window.addEventListener('touchstart', (e) => { this.touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        window.addEventListener('touchend', (e) => {
+          this.touchEndX = e.changedTouches[0].screenX;
+          const diff = this.touchStartX - this.touchEndX;
+          if (Math.abs(diff) > 50) { if (diff > 0) this.next(); else this.prev(); }
+        }, { passive: true });
+      }
+
+      initButtons() {
+        document.getElementById('prevBtn')?.addEventListener('click', () => this.prev());
+        document.getElementById('nextBtn')?.addEventListener('click', () => this.next());
+        document.getElementById('fsBtn')?.addEventListener('click', () => this.toggleFullscreen());
+        this.dots.forEach((dot) => {
+          dot.addEventListener('click', () => { this.showSlide(parseInt(dot.getAttribute('data-index'), 10)); });
+        });
+      }
+
+      toggleFullscreen() {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => console.error(err));
+        else document.exitFullscreen();
+      }
+
+      initInlineEditing() {
+        const hotzone = document.getElementById('editHotzone');
+        const toggleBtn = document.getElementById('editToggle');
+        let hideTimer = null;
+
+        hotzone?.addEventListener('mouseenter', () => { clearTimeout(hideTimer); toggleBtn?.classList.add('show'); });
+        hotzone?.addEventListener('mouseleave', () => { hideTimer = setTimeout(() => { if (!this.isEditing) toggleBtn?.classList.remove('show'); }, 600); });
+        toggleBtn?.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+        toggleBtn?.addEventListener('mouseleave', () => { if (!this.isEditing) toggleBtn.classList.remove('show'); });
+        toggleBtn?.addEventListener('click', () => this.toggleEditMode());
+
+        const savedData = localStorage.getItem('slides_coaching_eldp2026_v13');
+        if (savedData) {
+          try {
+            const parsed = JSON.parse(savedData);
+            Object.keys(parsed).forEach(id => {
+              const el = document.getElementById(id);
+              if (el) el.innerHTML = parsed[id];
+            });
+          } catch(e) { console.warn('Gagal memulihkan teks tersimpan:', e); }
+        }
+      }
+
+      toggleEditMode() {
+        this.isEditing = !this.isEditing;
+        const toggleBtn = document.getElementById('editToggle');
+        const editableElements = document.querySelectorAll('h1, h2, h3, h4, p, span, strong, em, li, div');
+
+        editableElements.forEach(el => {
+          if (el.closest('.deck-controls') || el.closest('.edit-toggle')) return;
+          el.contentEditable = this.isEditing ? 'true' : 'false';
+        });
+
+        if (this.isEditing) {
+          toggleBtn.textContent = '💾 Simpan Perubahan (E)';
+          toggleBtn.classList.add('show');
+          toggleBtn.style.background = '#2D5FFF';
+        } else {
+          toggleBtn.textContent = '✏️ Mode Edit (E)';
+          toggleBtn.style.background = 'rgba(22, 22, 22, 0.9)';
+          const dataToSave = {};
+          editableElements.forEach((el, index) => {
+            if (!el.id) el.id = `editable-v13-${index}`;
+            dataToSave[el.id] = el.innerHTML;
+          });
+          localStorage.setItem('slides_coaching_eldp2026_v13', JSON.stringify(dataToSave));
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { window.deck = new DeckPresentation(); });
+  </script>
+</body>
+</html>
